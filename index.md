@@ -15,13 +15,13 @@ The LendingClub platform connects borrowers to investors and facilitates the pay
 
 Working as quantitative investors on Wall Street, our passion is to come up with an investment strategy that could maximize our investment return for given level of risk. Loan details such as grade or subgrade, loan purpose, interest rate, and borrower information can all be used to evaluate a loan for possible investment. We want to build prediction models that can accurately forecast the loan-level default probability, so that we can efficiently allocate fund to loans with high return and low risk.
 
-![IMUs](/Images/lending_club.jpg)
-
 
 ### Problem Statement:
 How to predict loan-level default probability?
 Solve as a classification problem of classifying good and bad loans. 
 
-![IMUs](/Images/loans.jpg)
+
+![IMUs](/Images/lending_club.jpg)
+
 
 
