@@ -1,5 +1,5 @@
 ---
-title: Overview:
+title: Lending Club
 notebook: Report-Homepage.ipynb
 nav_include: 1
 ---
