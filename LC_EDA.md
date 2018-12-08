@@ -1,5 +1,5 @@
 ---
-title: EDA 
+title: EDA and Feature Engineering
 notebook: LC_EDA.ipynb
 nav_include: 2
 ---
