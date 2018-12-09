@@ -402,6 +402,7 @@ iplot(fig, filename='d3-cloropleth-map')
 <h4> Summary: </h4>
 <ul>
 <li> <b>Bad loans have higher debt-to-income ratios. </b></li>
+<li> By visual inspection, bad loans have DTI ratio around 17, while good loans around 20. </li>
 </ul>
 
 
@@ -444,7 +445,7 @@ plt.show()
 
 <h4> Summary: </h4>
 <ul>
-<li> <b>Bad loans have lower FICO scores. </b></li>
+<li> The distributions of FICO scores of good and bad loans are similar overall, with majority of scores between 670 to 720. However, <b>good loans have higher FICO scores on the right tail, above 740. </b> This makes economic sense, because good loan applicants with high FICO scores will tend to pay the monthly installment on time.</li>
 </ul>
 
 
@@ -488,14 +489,6 @@ plt.show()
 
 ## Feature Engineering
 
-In the feature engineering stage, we will:
-- deal with sample bias
-- deal with reponse variable
-- deal with missing value 
-- deal with dates
-- deal with categorical variables
-
-
 
 
 ```python
@@ -516,8 +509,6 @@ df_clean = df_clean[df_clean['issue_d'] < datetime.datetime(2016, 1, 1, 0, 0)]
 
 ### Deal with Response Variable
 We treat the following types of loan status as bad loans with numerical value of 0:
-- Charge Off
-- Default 
 - Charged Off
 - Default 
 - Does not meet the credit policy. Status:Charged Off
