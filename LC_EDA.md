@@ -1,5 +1,5 @@
 ---
-title: EDA and Feature Engineering
+title: EDA
 notebook: LC_EDA.ipynb
 nav_include: 2
 ---
@@ -141,11 +141,16 @@ df['revol_util'] = df['revol_util'].apply(lambda x: float(x.strip().replace('%',
 
 
 ```python
-import warnings
-warnings.filterwarnings('ignore')
-
 df['issue_d'] = pd.to_datetime(df['issue_d'])
 df['year'] = df['issue_d'].apply(lambda x: int(x.year))
+```
+
+
+
+
+```python
+import warnings
+warnings.filterwarnings('ignore')
 
 f, ax = plt.subplots(1, 2, figsize=(20,7))
 
@@ -164,7 +169,7 @@ g2.tick_params(labelsize=14)
 
 
 
-![png](LC_EDA_files/LC_EDA_11_0.png)
+![png](LC_EDA_files/LC_EDA_12_0.png)
 
 
 ### Good Loans vs Bad Loans
@@ -181,7 +186,7 @@ According the lending club website, here is the loan status definition:
 <h4> Summary: </h4>
 <ul>
 <li> Bad loans consist only <b>12.66%</b> of the total loans in full sample.</li>
-<li> The number of bad loans typically tends to move together with the number of good loans over the years, however, that co-movement starts to diverge in recent three years. The reason is because almost of of the loans less than 3-years old are new loans, with most of them in the <b>status of current</b>. In order to reduce this <b>sample bias</b>, we will drop recent three-year data in feature engineering stage.</li>
+<li> The number of bad loans typically tends to move together with the number of good loans over the years, however, that co-movement starts to diverge in recent three years. The reason is because almost of of the loans less than 3-years old are new loans, with most of them in the <b>status of current</b>. In order to reduce this <b>sample bias</b>, we will drop loans in recent years in feature engineering stage.</li>
 </ul>
 
 
@@ -193,9 +198,14 @@ bad_loan = ["Charged Off",
             "In Grace Period", 
             "Late (16-30 days)", 
             "Late (31-120 days)"]
-    
-df['response'] = df['loan_status'].apply(lambda x: 'Bad Loan' if x in bad_loan else 'Good Loan')
 
+df['response'] = df['loan_status'].apply(lambda x: 'Bad Loan' if x in bad_loan else 'Good Loan')
+```
+
+
+
+
+```python
 f, ax = plt.subplots(1, 2, figsize=(16,8))
 
 colors = ["#3791D7", "#D72626"]
@@ -232,7 +242,7 @@ ax[1].tick_params(labelsize=12)
 
 
 
-![png](LC_EDA_files/LC_EDA_13_0.png)
+![png](LC_EDA_files/LC_EDA_15_0.png)
 
 
 ### Loans by Grade 
@@ -240,7 +250,7 @@ ax[1].tick_params(labelsize=12)
 <h4> Summary: </h4>
 <ul>
 <li> Most of the loan are with grades beween B and D. </li>
-<li> <b>The higher the grade, the higher probabilities of bad loans.</b> </li>
+<li> <b>Generally, the higher the grade, the higher probabilities of bad loans.</b> </li>
 </ul>
 
 
@@ -271,7 +281,7 @@ ax[0].tick_params(labelsize=16)
 ax[0].legend(fontsize=16)
 
 by_grade_norm.plot(kind='bar', stacked=True, ax=ax[1], colormap=cmap)
-ax[1].set_title('Percentage Number of Loans by Grade', fontsize=16)
+ax[1].set_title('Percentage Number of Loans by Sub-Grade', fontsize=16)
 ax[1].set_xlabel('Grade', fontsize=16)
 ax[1].set_ylabel('% of Loans', fontsize=16)
 ax[1].tick_params(labelsize=16)
@@ -281,7 +291,7 @@ plt.show()
 
 
 
-![png](LC_EDA_files/LC_EDA_16_0.png)
+![png](LC_EDA_files/LC_EDA_18_0.png)
 
 
 ### Loans by Purpose 
@@ -330,14 +340,14 @@ plt.show()
 
 
 
-![png](LC_EDA_files/LC_EDA_19_0.png)
+![png](LC_EDA_files/LC_EDA_21_0.png)
 
 
 ### Loans by State 
 
 <h4> Summary: </h4>
 <ul>
-<li> <b>The loan defulat rates vary by states. </b></li>
+<li> The loan defulat rates are very marginally different among US states, and could add more noise than information.</li>
 <li> IOWA has the highest default rate among all states, but further investigation shows that there are only 14 loans in Iowa in full history, so we'd better not think too much into it. </li>
 </ul>
 
@@ -397,6 +407,7 @@ iplot(fig, filename='d3-cloropleth-map')
 ![png](LC_EDA_files/loan_by_state.png)
 
 
+
 ### Loans by Debt-to-Income Ratio 
 
 <h4> Summary: </h4>
@@ -438,7 +449,7 @@ plt.show()
 
 
 
-![png](LC_EDA_files/LC_EDA_25_0.png)
+![png](LC_EDA_files/LC_EDA_27_0.png)
 
 
 ### Loans by FICO score 
@@ -452,8 +463,12 @@ plt.show()
 
 ```python
 df['fico'] = (df['fico_range_low'] + df['fico_range_high']) / 2
-df.drop(['fico_range_low', 'fico_range_high'], axis=1, inplace=True)
+```
 
+
+
+
+```python
 fico_good = list(df[df['response']=='Good Loan']['fico'])
 fico_bad = list(df[df['response']=='Bad Loan']['fico'])
 
@@ -484,136 +499,12 @@ plt.show()
 
 
 
-![png](LC_EDA_files/LC_EDA_28_0.png)
-
-
-## Feature Engineering
-
-
-
-```python
-df_clean = df.copy()
-```
-
-
-### Deal with Sample Bias
-As we have seen in the EDA - Good Loans vs Bad Loans part, loans in recent three years are all new loans with most of them as current status. However, as time goes by, some of the loans may become bad loans. In order to avoid this sample bias, we decide to drop loans with issue dates in recent three years.  
-
-
-
-```python
-import datetime
-df_clean = df_clean[df_clean['issue_d'] < datetime.datetime(2016, 1, 1, 0, 0)]
-```
-
-
-### Deal with Response Variable
-We treat the following types of loan status as bad loans with numerical value of 0:
-- Charged Off
-- Default 
-- Does not meet the credit policy. Status:Charged Off
-- In Grace Period
-- Late (16-30 days) 
-- Late (31-120 days)
- 
-
-
-
-```python
-df_clean['response'] = df_clean['response'].apply(lambda x: 1 if x == 'Good Loan' else 0)
-df_clean.drop(['loan_status'], axis=1, inplace=True)
-```
-
-
-### Deal with Missing Value 
-We replaced missing value with mean value in each loan grade bucket.
-
-
-
-```python
-col_count = df_clean.describe().loc['count',]
-col_count_nrm = col_count / max(col_count)
-
-col_missing = ['tot_cur_bal', 'tot_coll_amt', 'dti', 'inq_last_6mths']
-for col in col_missing: 
-    df_clean[col] = df_clean.groupby("grade")[col].transform(lambda x: x.fillna(x.mean()))
-```
-
-
-### Deal with Dates
-Some features of types of dates could be helpful to predict the loan default probability, such as <b>earliest credit line date</b> for the applicant. Typically the longer the history of the applicant's credit line, the more confidence we have on his/her FICO score, and the lower probability of default in general. However, we need to anchor the earliest credit line date relative to the loan issue date, as that's the information we know at initial investment stage.  
-
-We also cleaned up other date features that should not be treated as features. 
-
-
-
-```python
-df_clean['earliest_cr_line'] = pd.to_datetime(df_clean['earliest_cr_line'])
-df_clean['earliest_cr_line'] = df_clean['issue_d'] - df_clean['earliest_cr_line']
-df_clean['earliest_cr_line'] = df_clean['earliest_cr_line'].apply(lambda x: x.days)
-df_clean.drop(['issue_d', 'year'], axis=1, inplace=True)
-```
-
-
-### Deal with Categorical Variables
-There are two types of categorical variables that we need to engineer. 
-- One type of categorical features contain ordinal order, and we want to maitain that order, like grade (In term of loan quality, A > B > ... > G), and employement length (10+ years > 9 years > ... > 1 year). 
-- The other type of cateorical features don't have any ordinal order, like purpose of the loan, state address, application type, etc. We will use one-hot-encoding to create dummy variables for this type of categories. 
-
-
-
-```python
-grade_map = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7}
-df_clean['grade'] = df_clean['grade'].map(grade_map)
-```
+![png](LC_EDA_files/LC_EDA_31_0.png)
 
 
 
 
 ```python
-df_clean['emp_length'] = df_clean['emp_length'].apply(lambda x: '0 year' if x == '< 1 year' else x)
-
-import re
-df_clean['emp_length'] = df_clean['emp_length'].apply(lambda x: int(re.findall(r'\d+', x)[0]) 
-                                                    if isinstance(x, str) else np.nan)
-
-df_clean['emp_length'] = df_clean.groupby("grade")['emp_length'].transform(lambda x: x.fillna(x.mean()))
-```
-
-
-
-
-```python
-application_type_map = {'Individual': 1, 'Joint App': 0}
-df_clean['application_type'] = df_clean['application_type'].map(application_type_map)
-```
-
-
-
-
-```python
-df_clean.rename({'verification_status': 'ver'}, axis=1, inplace=True)
-
-ver_map = {
-    "Source Verified": "Source_Verified",
-    "Not Verified": "Not_Verified",
-    "Verified": "Verified"
-}
-df_clean['ver'] = df_clean['ver'].map(ver_map)
-```
-
-
-
-
-```python
-dummy_list = ['home_ownership', 'ver', 'purpose', 'addr_state']
-df_clean = pd.get_dummies(df_clean, columns=dummy_list, drop_first=True)
-```
-
-
-
-
-```python
-df_clean.to_csv("data/df_clean.csv", index=False)
+df.to_csv("data/output_eda.csv", index=False)
 ```
 
