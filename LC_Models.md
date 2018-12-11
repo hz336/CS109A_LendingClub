@@ -1,7 +1,7 @@
 ---
 title: Models
 notebook: LC_Models.ipynb
-nav_include: 1
+nav_include: 4
 ---
 
 ## Contents
