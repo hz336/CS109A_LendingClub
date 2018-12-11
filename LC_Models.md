@@ -1,7 +1,7 @@
 ---
 title: Models
 notebook: LC_Models.ipynb
-nav_include: 4
+nav_include: 1
 ---
 
 ## Contents
@@ -240,7 +240,7 @@ print("Oversampled Training Set:\nNumber of bad loans: {}\nNumber of good loans:
 
 ### Logistic Regression 
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -290,7 +290,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_22_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -341,7 +341,7 @@ plt.show()
 
 ### kNN 
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -433,7 +433,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_31_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -527,7 +527,7 @@ plt.show()
 
 ### LDA
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -577,7 +577,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_40_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -629,7 +629,7 @@ plt.show()
 
 ### QDA
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -679,7 +679,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_47_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -713,7 +713,7 @@ print('LDA: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2
 
 ### Single Decision Tree
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -817,7 +817,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_55_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -923,7 +923,7 @@ plt.show()
 
 ### Random Forest
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -1050,7 +1050,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_67_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -1179,7 +1179,7 @@ plt.show()
 
 ### AddBoost
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -1289,7 +1289,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_79_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -1401,7 +1401,7 @@ plt.show()
 
 ### Neural Network
 
-#### Raw training set
+<b> Raw training set </b>
 
 
 
@@ -1578,7 +1578,7 @@ plt.show()
 ![png](LC_Models_files/LC_Models_92_0.png)
 
 
-#### Oversampled Training set 
+<b> Oversampled Training set </b>
 
 
 
@@ -1876,6 +1876,113 @@ results.to_csv("data/results.csv", index=True)
   </tbody>
 </table>
 </div>
+
+
+
+
+```python
+del results.index.name 
+results
+```
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>F1</th>
+      <th>precesion</th>
+      <th>recall</th>
+      <th>test_acc</th>
+      <th>train_acc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Logistic</th>
+      <td>0.010417</td>
+      <td>0.400000</td>
+      <td>0.005277</td>
+      <td>0.841336</td>
+      <td>0.843358</td>
+    </tr>
+    <tr>
+      <th>kNN</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.840501</td>
+      <td>0.842105</td>
+    </tr>
+    <tr>
+      <th>LDA</th>
+      <td>0.214022</td>
+      <td>0.355828</td>
+      <td>0.153034</td>
+      <td>0.822129</td>
+      <td>0.851295</td>
+    </tr>
+    <tr>
+      <th>QDA</th>
+      <td>0.278242</td>
+      <td>0.176305</td>
+      <td>0.659631</td>
+      <td>0.458455</td>
+      <td>0.536341</td>
+    </tr>
+    <tr>
+      <th>Single Tree</th>
+      <td>0.169717</td>
+      <td>0.229730</td>
+      <td>0.134565</td>
+      <td>0.791649</td>
+      <td>0.921888</td>
+    </tr>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.841754</td>
+      <td>0.841688</td>
+    </tr>
+    <tr>
+      <th>AddBoost</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.841754</td>
+      <td>0.841688</td>
+    </tr>
+    <tr>
+      <th>Neural Network</th>
+      <td>0.090047</td>
+      <td>0.441860</td>
+      <td>0.050132</td>
+      <td>0.839666</td>
+      <td>0.856725</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 
 
