@@ -1754,3 +1754,247 @@ plt.show()
 
 ![png](LC_Models_files/LC_Models_99_0.png)
 
+
+## Output Model Results
+
+
+
+```python
+results = pd.DataFrame([logit_results, 
+                        knn_results, 
+                        lda_results, 
+                        qda_results, 
+                        tree_results, 
+                        rf_results, 
+                        ab_results, 
+                        nn_results])
+results.set_index('model', inplace=True)
+display(results)
+results.to_csv("data/results.csv", index=True)
+```
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>F1</th>
+      <th>precesion</th>
+      <th>recall</th>
+      <th>test_acc</th>
+      <th>train_acc</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Logistic</th>
+      <td>0.010417</td>
+      <td>0.400000</td>
+      <td>0.005277</td>
+      <td>0.841336</td>
+      <td>0.843358</td>
+    </tr>
+    <tr>
+      <th>kNN</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.840501</td>
+      <td>0.842105</td>
+    </tr>
+    <tr>
+      <th>LDA</th>
+      <td>0.214022</td>
+      <td>0.355828</td>
+      <td>0.153034</td>
+      <td>0.822129</td>
+      <td>0.851295</td>
+    </tr>
+    <tr>
+      <th>QDA</th>
+      <td>0.278242</td>
+      <td>0.176305</td>
+      <td>0.659631</td>
+      <td>0.458455</td>
+      <td>0.536341</td>
+    </tr>
+    <tr>
+      <th>Single Tree</th>
+      <td>0.169717</td>
+      <td>0.229730</td>
+      <td>0.134565</td>
+      <td>0.791649</td>
+      <td>0.921888</td>
+    </tr>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.841754</td>
+      <td>0.841688</td>
+    </tr>
+    <tr>
+      <th>AddBoost</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.841754</td>
+      <td>0.841688</td>
+    </tr>
+    <tr>
+      <th>Neural Network</th>
+      <td>0.090047</td>
+      <td>0.441860</td>
+      <td>0.050132</td>
+      <td>0.839666</td>
+      <td>0.856725</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+results_sm = pd.DataFrame([logit_sm_results, 
+                           knn_sm_results, 
+                           lda_sm_results, 
+                           qda_sm_results, 
+                           tree_sm_results, 
+                           rf_sm_results, 
+                           ab_sm_results, 
+                           nn_sm_results])
+results_sm.set_index('model', inplace=True)
+display(results_sm)
+results_sm.to_csv("data/results_sm.csv", index=True)
+```
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>F1</th>
+      <th>precesion</th>
+      <th>recall</th>
+      <th>test_acc</th>
+      <th>train_acc</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Logistic</th>
+      <td>0.320442</td>
+      <td>0.228604</td>
+      <td>0.535620</td>
+      <td>0.640501</td>
+      <td>0.730521</td>
+    </tr>
+    <tr>
+      <th>kNN</th>
+      <td>0.242009</td>
+      <td>0.213280</td>
+      <td>0.279683</td>
+      <td>0.722756</td>
+      <td>0.998015</td>
+    </tr>
+    <tr>
+      <th>LDA</th>
+      <td>0.318218</td>
+      <td>0.227790</td>
+      <td>0.527704</td>
+      <td>0.642171</td>
+      <td>0.726055</td>
+    </tr>
+    <tr>
+      <th>QDA</th>
+      <td>0.256649</td>
+      <td>0.171556</td>
+      <td>0.509235</td>
+      <td>0.533194</td>
+      <td>0.767246</td>
+    </tr>
+    <tr>
+      <th>Single Tree</th>
+      <td>0.254257</td>
+      <td>0.223108</td>
+      <td>0.295515</td>
+      <td>0.725678</td>
+      <td>0.930521</td>
+    </tr>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.242520</td>
+      <td>0.300781</td>
+      <td>0.203166</td>
+      <td>0.799165</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>AddBoost</th>
+      <td>0.077803</td>
+      <td>0.293103</td>
+      <td>0.044855</td>
+      <td>0.822547</td>
+      <td>0.907940</td>
+    </tr>
+    <tr>
+      <th>Neural Network</th>
+      <td>0.234519</td>
+      <td>0.234211</td>
+      <td>0.234828</td>
+      <td>0.757411</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
