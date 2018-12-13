@@ -1,7 +1,7 @@
 ---
 title: Results and Conclusion
 notebook: LC_Conclusion.ipynb
-nav_include: 5
+nav_include: 6
 ---
 
 ## Contents
