@@ -161,7 +161,7 @@ g3.tick_params(labelsize=14, rotation=90)
 
 Like many financial predictions, predicting the default risk of the loans is definitely not an easy job given the imbalance dataset. Similar to identifying cancers, missing default loans is more serious than misclassified the good loans. In this case, we are willing to sacrifice accuracy with higher recall ratio. After balancing the recall ratio with testing accuracy, we decide to choose logistic regression trained with SMOTE dataset with 53% recall and 64% test accuracy to predict the default loans.
 
-
+:-----------------------------------------:|:------------------------------------------:
 ![png](LC_Models_files/LC_Models_25_0.png) | ![png](LC_Models_files/LC_Models_26_0.png)
 
 
