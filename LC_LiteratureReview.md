@@ -15,7 +15,7 @@ In 1974, Rober Merton published a model to asses the default risk of a company b
 For the last few years, thanks to the dramatic increase of the computer power and data availability, financial instituitions start to use different machine learning skills such as random forest, Boosting, Neural Networks etc, to predict the default risk of the loans [3]. Given the large amount of loan data with plenty of attributes from Lending Club, we will train various machine learning models to predict the default risk of the loans.
 
 
-### References 
+<b> References </b>
 
 [1] Merton, R C (1974), ‘The pricing of corporate debt: the risk structure of interest rates’, Journal of Finance, Vol. 29, no. 2, December, pages 449–70<br/>
 [2] Misankova, M. et al. (2015). Determination of Default Probability by Loss Given Default, Procedia Economics and finance, Vol 26, pp. 411- 417.<br/>
