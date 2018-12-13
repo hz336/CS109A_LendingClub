@@ -65,15 +65,15 @@ df_raw = df_raw.reset_index(drop=True)
 
 
 ### Feature Selection
-There are totally 151 columns in the raw dataset. In the initial feature selection stage, we applied several very rigorious selection criteria: 
+There are totally 151 columns in the raw dataset. In the initial feature selection stage, we applied several very rigorous  selection criteria: 
 - The full sample feature coverage should be larger than 60%, otherwise, there are two many missing values. 
-    - Around 5% of the loans are joint applications in full sample, which means 95% of the feature columns regarding the second applicatant will be missing. Thus, all the columns regarding the second applicant are droped, for example FICO scores (sec_app_fico_range_low, sec_app_fico_range_high), earliest credit line at time (sec_app_earliest_cr_line), etc for the second applicant.
-    - Some other columns have coverage less than 60% as well. For example, column number of months since the borrower's last delinquency (mths_since_last_major_derog) has only 25% coverage. For the missing data, it's impossible for us to know exactly the reason hehind it, either because of unavailability by nature or unwillingess of applicants providing the information. Thus, we decided to drop these types of columns as well.
-- The features with look-ahead bias are droped. 
+    - Around 5% of the loans are joint applications in full sample, which means 95% of the feature columns regarding the second applicatant will be missing. Thus, all the columns regarding the second applicant are dropped, for example FICO scores (sec_app_fico_range_low, sec_app_fico_range_high), earliest credit line at time (sec_app_earliest_cr_line), etc for the second applicant.
+    - Some other columns have coverage less than 60% as well. For example, column number of months since the borrower's last delinquency (mths_since_last_major_derog) has only 25% coverage. For the missing data, it's impossible for us to know exactly the reason behind it, either because of unavailability by nature or unwillingness of applicants providing the information. Thus, we decided to drop these types of columns as well.
+- The features with look-ahead bias are dropped. 
     - Column post charge off gross recovery (recoveries) will directly indicate the loan has been in charge-off status. However, as an investor, we want to predict if loan is going to end up as a good loan or bad loan at the initiation stage. The information of recoveries is not what we know about beforehand. Thus, we have to drop it from the predictors. 
-    - There are some other columns have to be droped as well, for example late fees received to date (total_rec_late_fee), payments received to date for total amount funded, etc. All the information that is not known at the beginning of the application should not be included as predictors. 
-- The redudant features are droped. 
-    - Credit grades and credit sub grades contain the same information, but just in different granularity. We kept grades and droped sub grades. 
+    - There are some other columns have to be dropped as well, for example late fees received to date (total_rec_late_fee), payments received to date for total amount funded, etc. All the information that is not known at the beginning of the application should not be included as predictors. 
+- The redundant features are dropped. 
+    - Credit grades and credit sub grades contain the same information, but just in different granularity. We kept grades and dropped sub grades. 
     - Zip codes and States also contain similar information, and we kept states as predictor, partly because there are too many zip codes.   
     - From fixed income formula, we can mathematically calculate the monthly installment amount given annual interest rate, term and loan amount. Thus, installment does not contain any new information, and thus is dropped.   
 
@@ -403,9 +403,7 @@ iplot(fig, filename='d3-cloropleth-map')
 ```
 
 
-
 ![png](LC_EDA_files/loan_by_state.png)
-
 
 
 ### Loans by Debt-to-Income Ratio 
@@ -413,7 +411,7 @@ iplot(fig, filename='d3-cloropleth-map')
 <h4> Summary: </h4>
 <ul>
 <li> <b>Bad loans have higher debt-to-income ratios. </b></li>
-<li> By visual inspection, bad loans have DTI ratio around 17, while good loans around 20. </li>
+<li> By visual inspection, good loans have DTI ratio around 17, while bad loans around 20. </li>
 </ul>
 
 

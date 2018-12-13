@@ -40,6 +40,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import auc, roc_curve
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -56,9 +57,6 @@ pd.set_option('display.max_columns', 500)
 % matplotlib inline
 ```
 
-
-    Using TensorFlow backend.
-    
 
 ## Data Preparation
 There are too many observations in the dataset, which will take hours or even days to fit for some sophisticated algorithms. Thus, we decided to take a stratified sample on year of raw dataset in the model fitting stage. 
@@ -255,7 +253,7 @@ logit_results = {
     'model': 'Logistic',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -263,7 +261,7 @@ logit_results = {
 print('Logistic Regression: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(logit_results['train_acc'], 
              logit_results['test_acc'], 
-             logit_results['precesion'], 
+             logit_results['precision'], 
              logit_results['recall'], 
              logit_results['F1']))
 ```
@@ -304,7 +302,7 @@ logit_sm_results = {
     'model': 'Logistic',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -312,7 +310,7 @@ logit_sm_results = {
 print('Logistic Regression: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(logit_sm_results['train_acc'], 
              logit_sm_results['test_acc'], 
-             logit_sm_results['precesion'], 
+             logit_sm_results['precision'], 
              logit_sm_results['recall'], 
              logit_sm_results['F1']))
 ```
@@ -337,6 +335,33 @@ plt.show()
 
 
 ![png](LC_Models_files/LC_Models_25_0.png)
+
+
+
+
+```python
+probs = logit_sm.predict_proba(X_test)
+preds = probs[:,1]
+fpr, tpr, threshold = roc_curve(y_test, preds)
+roc_auc = auc(fpr, tpr)
+
+f, ax = plt.subplots(figsize=(11,7))
+plt.title('Logistic Regression ROC Curve', fontsize=16)
+plt.plot(fpr, tpr, 'b', label = 'AUC = %0.2f' % roc_auc)
+plt.legend(loc = 'lower right', fontsize=16)
+plt.plot([0, 1], [0, 1],'r--')
+plt.xlim([0, 1])
+plt.ylim([0, 1])
+plt.ylabel('True Positive Rate', fontsize=16)
+plt.xlabel('False Positive Rate', fontsize=16)
+plt.tick_params(labelsize=16)
+plt.show()
+
+```
+
+
+
+![png](LC_Models_files/LC_Models_26_0.png)
 
 
 ### kNN 
@@ -378,7 +403,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_29_0.png)
+![png](LC_Models_files/LC_Models_30_0.png)
 
 
 
@@ -397,7 +422,7 @@ knn_results = {
     'model': 'kNN',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -405,7 +430,7 @@ knn_results = {
 print('kNN: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(knn_results['train_acc'], 
              knn_results['test_acc'], 
-             knn_results['precesion'], 
+             knn_results['precision'], 
              knn_results['recall'], 
              knn_results['F1']))
 ```
@@ -430,7 +455,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_31_0.png)
+![png](LC_Models_files/LC_Models_32_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -470,7 +495,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_34_0.png)
+![png](LC_Models_files/LC_Models_35_0.png)
 
 
 
@@ -489,7 +514,7 @@ knn_sm_results = {
     'model': 'kNN',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -497,7 +522,7 @@ knn_sm_results = {
 print('kNN: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(knn_sm_results['train_acc'], 
              knn_sm_results['test_acc'], 
-             knn_sm_results['precesion'], 
+             knn_sm_results['precision'], 
              knn_sm_results['recall'], 
              knn_sm_results['F1']))
 ```
@@ -522,7 +547,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_36_0.png)
+![png](LC_Models_files/LC_Models_37_0.png)
 
 
 ### LDA
@@ -542,7 +567,7 @@ lda_results = {
     'model': 'LDA',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -550,7 +575,7 @@ lda_results = {
 print('LDA: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(lda_results['train_acc'], 
              lda_results['test_acc'], 
-             lda_results['precesion'], 
+             lda_results['precision'], 
              lda_results['recall'], 
              lda_results['F1']))
 ```
@@ -574,7 +599,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_40_0.png)
+![png](LC_Models_files/LC_Models_41_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -592,7 +617,7 @@ lda_sm_results = {
     'model': 'LDA',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -600,7 +625,7 @@ lda_sm_results = {
 print('LDA: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(lda_sm_results['train_acc'], 
              lda_sm_results['test_acc'], 
-             lda_sm_results['precesion'], 
+             lda_sm_results['precision'], 
              lda_sm_results['recall'], 
              lda_sm_results['F1']))
 ```
@@ -624,7 +649,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_43_0.png)
+![png](LC_Models_files/LC_Models_44_0.png)
 
 
 ### QDA
@@ -644,7 +669,7 @@ qda_results = {
     'model': 'QDA',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -652,7 +677,7 @@ qda_results = {
 print('LDA: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(qda_results['train_acc'], 
              qda_results['test_acc'], 
-             qda_results['precesion'], 
+             qda_results['precision'], 
              qda_results['recall'], 
              qda_results['F1']))
 ```
@@ -676,7 +701,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_47_0.png)
+![png](LC_Models_files/LC_Models_48_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -694,7 +719,7 @@ qda_sm_results = {
     'model': 'QDA',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -702,7 +727,7 @@ qda_sm_results = {
 print('LDA: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(qda_sm_results['train_acc'], 
              qda_sm_results['test_acc'], 
-             qda_sm_results['precesion'], 
+             qda_sm_results['precision'], 
              qda_sm_results['recall'], 
              qda_sm_results['F1']))
 ```
@@ -760,7 +785,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_53_0.png)
+![png](LC_Models_files/LC_Models_54_0.png)
 
 
 
@@ -779,7 +804,7 @@ tree_results = {
     'model': 'Single Tree',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -787,14 +812,14 @@ tree_results = {
 print('Signle Tree: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(tree_results['train_acc'], 
              tree_results['test_acc'], 
-             tree_results['precesion'], 
+             tree_results['precision'], 
              tree_results['recall'], 
              tree_results['F1']))
 ```
 
 
     Single Tree: Optimal depth=10
-    Signle Tree: accuracy on train=92.19%, test=79.16%, precision=0.23, recall=0.13, F1=0.17
+    Signle Tree: accuracy on train=92.19%, test=78.91%, precision=0.22, recall=0.13, F1=0.16
     
 
 
@@ -814,7 +839,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_55_0.png)
+![png](LC_Models_files/LC_Models_56_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -864,7 +889,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_58_0.png)
+![png](LC_Models_files/LC_Models_59_0.png)
 
 
 
@@ -883,7 +908,7 @@ tree_sm_results = {
     'model': 'Single Tree',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -891,14 +916,14 @@ tree_sm_results = {
 print('Single Tree: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(tree_sm_results['train_acc'], 
              tree_sm_results['test_acc'], 
-             tree_sm_results['precesion'], 
+             tree_sm_results['precision'], 
              tree_sm_results['recall'], 
              tree_sm_results['F1']))
 ```
 
 
     Single Tree: Optimal depth=10
-    Single Tree: accuracy on train=93.05%, test=72.57%, precision=0.22, recall=0.30, F1=0.25
+    Single Tree: accuracy on train=93.08%, test=72.65%, precision=0.22, recall=0.28, F1=0.25
     
 
 
@@ -918,7 +943,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_60_0.png)
+![png](LC_Models_files/LC_Models_61_0.png)
 
 
 ### Random Forest
@@ -971,7 +996,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_64_0.png)
+![png](LC_Models_files/LC_Models_65_0.png)
 
 
 
@@ -990,7 +1015,7 @@ rf_results = {
     'model': 'Random Forest',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -998,7 +1023,7 @@ rf_results = {
 print('Random Forest: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(rf_results['train_acc'], 
              rf_results['test_acc'], 
-             rf_results['precesion'], 
+             rf_results['precision'], 
              rf_results['recall'], 
              rf_results['F1']))
 ```
@@ -1025,7 +1050,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_66_0.png)
+![png](LC_Models_files/LC_Models_67_0.png)
 
 
 
@@ -1047,7 +1072,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_67_0.png)
+![png](LC_Models_files/LC_Models_68_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -1098,7 +1123,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_70_0.png)
+![png](LC_Models_files/LC_Models_71_0.png)
 
 
 
@@ -1117,7 +1142,7 @@ rf_sm_results = {
     'model': 'Random Forest',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -1125,7 +1150,7 @@ rf_sm_results = {
 print('Random Forest: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(rf_sm_results['train_acc'], 
              rf_sm_results['test_acc'], 
-             rf_sm_results['precesion'], 
+             rf_sm_results['precision'], 
              rf_sm_results['recall'], 
              rf_sm_results['F1']))
 ```
@@ -1152,7 +1177,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_72_0.png)
+![png](LC_Models_files/LC_Models_73_0.png)
 
 
 
@@ -1174,7 +1199,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_73_0.png)
+![png](LC_Models_files/LC_Models_74_0.png)
 
 
 ### AddBoost
@@ -1229,7 +1254,7 @@ ax.tick_params(labelsize=16)
 
 
 
-![png](LC_Models_files/LC_Models_77_0.png)
+![png](LC_Models_files/LC_Models_78_0.png)
 
 
 
@@ -1250,7 +1275,7 @@ ab_results = {
     'model': 'AddBoost',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -1258,7 +1283,7 @@ ab_results = {
 print('Random Forest: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(ab_results['train_acc'], 
              ab_results['test_acc'], 
-             ab_results['precesion'], 
+             ab_results['precision'], 
              ab_results['recall'], 
              ab_results['F1']))
 ```
@@ -1286,7 +1311,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_79_0.png)
+![png](LC_Models_files/LC_Models_80_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -1339,7 +1364,7 @@ ax.tick_params(labelsize=16)
 
 
 
-![png](LC_Models_files/LC_Models_82_0.png)
+![png](LC_Models_files/LC_Models_83_0.png)
 
 
 
@@ -1360,7 +1385,7 @@ ab_sm_results = {
     'model': 'AddBoost',
     'train_acc': train_acc,
     'test_acc': test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -1368,7 +1393,7 @@ ab_sm_results = {
 print('Random Forest: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(ab_sm_results['train_acc'], 
              ab_sm_results['test_acc'], 
-             ab_sm_results['precesion'], 
+             ab_sm_results['precision'], 
              ab_sm_results['recall'], 
              ab_sm_results['F1']))
 ```
@@ -1376,7 +1401,7 @@ print('Random Forest: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, r
 
     AddBoost: Optimal depth=3
     AddBoost: Optimal number of estimators=50
-    Random Forest: accuracy on train=90.79%, test=82.25%, precision=0.29, recall=0.04, F1=0.08
+    Random Forest: accuracy on train=90.79%, test=82.13%, precision=0.28, recall=0.04, F1=0.08
     
 
 
@@ -1396,7 +1421,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_84_0.png)
+![png](LC_Models_files/LC_Models_85_0.png)
 
 
 ### Neural Network
@@ -1476,7 +1501,7 @@ ax.tick_params(labelsize=16)
 
 
 
-![png](LC_Models_files/LC_Models_89_0.png)
+![png](LC_Models_files/LC_Models_90_0.png)
 
 
 
@@ -1543,7 +1568,7 @@ nn_results = {
     'model': 'Neural Network',
     'train_acc': nn_train_acc,
     'test_acc': nn_test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -1551,13 +1576,13 @@ nn_results = {
 print('Neural Network: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(nn_results['train_acc'], 
              nn_results['test_acc'], 
-             nn_results['precesion'], 
+             nn_results['precision'], 
              nn_results['recall'], 
              nn_results['F1']))
 ```
 
 
-    Neural Network: accuracy on train=85.67%, test=83.97%, precision=0.44, recall=0.05, F1=0.09
+    Neural Network: accuracy on train=85.96%, test=83.63%, precision=0.40, recall=0.07, F1=0.12
     
 
 
@@ -1575,7 +1600,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_92_0.png)
+![png](LC_Models_files/LC_Models_93_0.png)
 
 
 <b> Oversampled Training set </b>
@@ -1653,7 +1678,7 @@ ax.tick_params(labelsize=16)
 
 
 
-![png](LC_Models_files/LC_Models_96_0.png)
+![png](LC_Models_files/LC_Models_97_0.png)
 
 
 
@@ -1676,7 +1701,7 @@ nn_sm.add(Dense(output_dim, activation='sigmoid'))
 nn_sm.compile(loss='binary_crossentropy', optimizer='sgd')
 nn_sm.summary()
 
-epochs = 1000 
+epochs = 100 
 batch_size = 128
 
 nn_sm_history = nn_sm.fit(X_train_arr, y_train_arr, 
@@ -1706,11 +1731,11 @@ nn_sm_history = nn_sm.fit(X_train_arr, y_train_arr,
 
 
 ```python
-nn_train_df = pd.DataFrame(nn.predict(X_train_arr))
+nn_train_df = pd.DataFrame(nn_sm.predict(X_train_arr))
 nn_train_df['pred'] = nn_train_df.apply(lambda x: 1 if x[0] < x[1] else 0, axis=1)
 nn_train_acc = accuracy_score(y_train_sm, nn_train_df['pred'].values)
 
-nn_test_df = pd.DataFrame(nn.predict(X_test_arr))
+nn_test_df = pd.DataFrame(nn_sm.predict(X_test_arr))
 nn_test_df['pred'] = nn_test_df.apply(lambda x: 1 if x[0] < x[1] else 0, axis=1)
 nn_test_acc = accuracy_score(y_test, nn_test_df['pred'].values)
 
@@ -1720,7 +1745,7 @@ nn_sm_results = {
     'model': 'Neural Network',
     'train_acc': nn_train_acc,
     'test_acc': nn_test_acc,
-    'precesion': report_lr[0],
+    'precision': report_lr[0],
     'recall': report_lr[1],
     'F1': report_lr[2]
 }
@@ -1728,13 +1753,13 @@ nn_sm_results = {
 print('Neural Network: accuracy on train={:.2%}, test={:.2%}, precision={:.2f}, recall={:.2f}, F1={:.2f}'.
       format(nn_sm_results['train_acc'], 
              nn_sm_results['test_acc'], 
-             nn_sm_results['precesion'], 
+             nn_sm_results['precision'], 
              nn_sm_results['recall'], 
              nn_sm_results['F1']))
 ```
 
 
-    Neural Network: accuracy on train=100.00%, test=75.74%, precision=0.23, recall=0.23, F1=0.23
+    Neural Network: accuracy on train=84.74%, test=69.69%, precision=0.23, recall=0.39, F1=0.29
     
 
 
@@ -1752,7 +1777,7 @@ plt.show()
 
 
 
-![png](LC_Models_files/LC_Models_99_0.png)
+![png](LC_Models_files/LC_Models_100_0.png)
 
 
 ## Output Model Results

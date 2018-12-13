@@ -9,7 +9,6 @@ nav_include: 3
 *  
 {: toc}
 
-## Feature Engineering
 
 Feature engineering is especially important for financial dataset, which is very noisy in nature. 
 
