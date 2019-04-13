@@ -6,8 +6,6 @@ nav_include: 1
 
 
 ## Harvard CS109A Data Science Project
-Haoran Zhao and Xi Han, 
-Group #60
 
 
 ### Motivation:
