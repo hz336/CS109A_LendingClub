@@ -6,7 +6,7 @@ nav_include: 1
 
 
 ## Harvard CS109A Data Science Project
-
+Haoran Zhao 
 
 ### Motivation:
 The Lending Club platform connects borrowers to investors and facilitates the payment of loans. The basic idea is that borrowers apply for a loan on the Lending Club Marketplace. Investors can review the loan applications, along with risk analysis provided by Lending Club, to determine how much of the loan request they are willing to fund. When the loan is fully funded, the borrower will receive the loan. Investors can also choose to have loans selected manually or automatically via a specified strategy. 
