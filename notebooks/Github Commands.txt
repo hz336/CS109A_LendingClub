@@ -1,0 +1,11 @@
+## Convert notebooks to md: 
+jupyter nbconvert --output-dir . --to markdown --template _support/markdown.tpl notebooks/LC_EDA.ipynb
+
+python _support/nbmd.py LC_EDA.md
+
+nav_include: 1
+
+
+
+## Insert image:
+![](pic/hw3_BSS.png)
